@@ -722,7 +722,7 @@ defaults write com.twitter.twitter-mac HideInBackground -bool true
 # XCode                                                                       #
 ###############################################################################
 
-cp ~/init/Monokai\ PT\ Mono.dvtcolortheme ~/Library/Developer/Xcode/UserData/FontAndColorThemes
+cp -r ~/init/Monokai\ PT\ Mono.dvtcolortheme ~/Library/Developer/Xcode/UserData/FontAndColorThemes 2> /dev/null
 
 ###############################################################################
 # Kill affected applications                                                  #
