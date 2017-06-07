@@ -2,6 +2,8 @@
 set background=dark
 colorscheme solarized
 let g:solarized_termtrans=1
+"
+let base16colorspace=256  " Access colors present in 256 colorspace
 
 " Make Vim more useful
 set nocompatible
@@ -9,6 +11,7 @@ set nocompatible
 set clipboard=unnamed
 " Enhance command-line completion
 set wildmenu
+set wildmode=list:longest,full
 " Allow cursor keys in insert mode
 set esckeys
 " Allow backspace in insert mode
@@ -25,10 +28,10 @@ let mapleader=","
 set binary
 set noeol
 " Centralize backups, swapfiles and undo history
-set backupdir=~/.vim/backups
-set directory=~/.vim/swaps
+set backupdir=~/tmp/.vim/backups
+set directory=~/tmp/.vim/swaps
 if exists("&undodir")
-	set undodir=~/.vim/undo
+	set undodir=~/tmp/.vim/undo
 endif
 
 " Don’t create backups when editing files in certain directories
@@ -50,7 +53,6 @@ set cursorline
 set tabstop=2
 " Show “invisible” characters
 set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
-set list
 " Highlight searches
 set hlsearch
 " Ignore case of searches
@@ -104,3 +106,22 @@ if has("autocmd")
 	" Treat .md files as Markdown
 	autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
 endif
+
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor 
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
+filetype plugin on
+
+let g:ctrlp_working_path_mode = 'a'
+ 
+nnoremap <leader>sv :source ~/.vimrc<CR>
+nnoremap <leader>ev :edit ~/.vimrc<CR>
+
+let g:vim_markdown_folding_disabled = 1
