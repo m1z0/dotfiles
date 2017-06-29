@@ -50,7 +50,7 @@ syntax on
 " Highlight current line
 set cursorline
 " Make tabs as wide as two spaces
-set tabstop=2
+set tabstop=4
 " Show “invisible” characters
 set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
 " Highlight searches
@@ -66,7 +66,7 @@ set mouse=a
 " Disable error bells
 set noerrorbells
 " Don’t reset cursor to start of line when moving around.
-set nostartofline
+"set nostartofline
 " Show the cursor position
 set ruler
 " Don’t show the intro message when starting Vim
@@ -120,8 +120,22 @@ endif
 filetype plugin on
 
 let g:ctrlp_working_path_mode = 'a'
- 
+let g:ctrlp_cmd = 'CtrlPBuffer'
+
 nnoremap <leader>sv :source ~/.vimrc<CR>
 nnoremap <leader>ev :edit ~/.vimrc<CR>
+nnoremap <leader>oh :noh<CR>
+nnoremap <leader>ya :%y+<CR>
 
 let g:vim_markdown_folding_disabled = 1
+
+" TODO: move to its own file
+function! DisplayPreviewPlantuml()
+    silent !clear
+    silent "!" . g:plantuml_executable_script . " -o " . bufname("%")
+	redraw!
+endfunction
+
+nnoremap <leader>bt :bufdo tab split<CR>
+
+autocmd FileType plantuml nnoremap <leader>pu :w<CR>:silent !g:plantuml_executable_script -o %:p:h %<CR>:redraw!<CR>
