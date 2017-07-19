@@ -1,9 +1,27 @@
-" Use the Solarized Dark theme
-set background=dark
-colorscheme solarized
-let g:solarized_termtrans=1
-"
-let base16colorspace=256  " Access colors present in 256 colorspace
+if has("gui_running")
+	" gui settings!
+	colorscheme molokai
+	set linespace=1
+	set background=dark
+else
+	let g:molokai_original=0
+	let g:rehash256 = 1
+	let t_Co = 256
+	let base16colorspace=256  " Access colors present in 256 colorspace
+
+	" check for colorcheme based on the terminal colors
+	" terminal could define VIM_TERMAWARE_COLORSCHEME that matches an entry inside
+	" termaware_colors.vim
+	let s:termaware_colorscheme_script = globpath(&rtp, 'termaware_colors.vim') 
+	if filereadable(s:termaware_colorscheme_script)
+		execute 'source' . s:termaware_colorscheme_script
+	endif
+	" set a default colorscheme if nothing above succeeded
+	if !exists('g:termaware#colorschemeset')
+		let g:colors_name = 'molokai'
+		let background='dark'
+	endif
+endif
 
 " Make Vim more useful
 set nocompatible
@@ -51,6 +69,11 @@ syntax on
 set cursorline
 " Make tabs as wide as two spaces
 set tabstop=4
+" TODO: make this per filetype
+" Replace tab with spaces
+set noexpandtab
+" Make indentation be the same width as the tabs
+set shiftwidth=4
 " Show “invisible” characters
 set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
 " Highlight searches
@@ -84,6 +107,8 @@ if exists("&relativenumber")
 endif
 " Start scrolling three lines before the horizontal window border
 set scrolloff=3
+" Use hidden
+set hidden
 
 " Strip trailing whitespace (,ss)
 function! StripWhitespace()
@@ -127,6 +152,9 @@ nnoremap <leader>ev :edit ~/.vimrc<CR>
 nnoremap <leader>oh :noh<CR>
 nnoremap <leader>ya :%y+<CR>
 
+inoremap jk <ESC>:w<CR>
+inoremap kj <ESC>:w<CR>
+
 let g:vim_markdown_folding_disabled = 1
 
 " TODO: move to its own file
@@ -136,6 +164,48 @@ function! DisplayPreviewPlantuml()
 	redraw!
 endfunction
 
+" All buffers into their own tab
 nnoremap <leader>bt :bufdo tab split<CR>
+" Easier buffer switching (TAB Complete works)
+nnoremap <space>b :ls<CR>:b 
 
 autocmd FileType plantuml nnoremap <leader>pu :w<CR>:silent !g:plantuml_executable_script -o %:p:h %<CR>:redraw!<CR>
+
+" vimwiki
+let g:vimwiki_auto_chdir=1
+let g:vimwiki_autowriteall=1
+let g:vimwiki_conceallevel=0
+let g:vimwiki_dir_link='index'
+let g:vimwiki_hl_cb_checked=1
+let g:vimwiki_hl_headers=1
+let g:vimwiki_listsyms=' .oO✓'
+let g:vimwiki_use_mouse=1
+let g:vimwiki_list = [{'path': '~/vimwiki/',
+  \ 'syntax': 'markdown',
+  \ 'ext': '.md',
+  \ 'auto_export': 1,
+  \ 'auto_toc': 1,
+  \ 'auto_tags': 1,
+  \ 'path_html': '~/vimwiki/html',
+  \ 'custom_wiki2html': 'vimwiki2html.rb',
+  \ 'custom_wiki2html_args':''}]
+
+autocmd FileType vimwiki call SetMarkdownOptions()
+
+function! SetMarkdownOptions()
+  call VimwikiSet('syntax', 'markdown')
+  call VimwikiSet('custom_wiki2html', 'vimwiki2html.rb')
+endfunction
+
+function! Time(com, ...)
+  let time = 0.0
+  let numberOfTimes = a:0 ? a:1 : 50000
+  for i in range(numberOfTimes + 1)
+    let t = reltime()
+    execute a:com
+    let time += reltime(t)[1]
+"    echo i.' / '.numberOfTimes
+    "redraw
+  endfor
+  echo 'Average time: '.string(numberOfTimes / i)
+endfunction
