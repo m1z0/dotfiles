@@ -13,7 +13,7 @@ let g:termaware#colorschemes = {
 \	}
 \}
 
-let s:scheme=$TERMAWARE_COLORSCHEME
+let s:scheme=$VIM_TERMAWARE_COLORSCHEME
 " echom 'env var scheme: ' . s:scheme
 
 if strlen(s:scheme) != 0 
