@@ -1,24 +1,24 @@
-[submodule ".vim/pack/bundles/start/vim-unimpaired"]
-	path = .vim/pack/bundles/start/vim-unimpaired
+[submodule "vim/pack/bundles/start/vim-unimpaired"]
+	path = vim/pack/bundles/start/vim-unimpaired
 	url = git://github.com/tpope/vim-unimpaired.git
-[submodule ".vim/pack/bundles/start/ctrlp.vim"]
-	path = .vim/pack/bundles/start/ctrlp.vim
+[submodule "vim/pack/bundles/start/ctrlp.vim"]
+	path = vim/pack/bundles/start/ctrlp.vim
 	url = https://github.com/ctrlpvim/ctrlp.vim.git
-[submodule ".vim/pack/bundles/start/vim-markdown"]
-	path = .vim/pack/bundles/start/vim-markdown
+[submodule "vim/pack/bundles/start/vim-markdown"]
+	path = vim/pack/bundles/start/vim-markdown
 	url = https://github.com/plasticboy/vim-markdown.git
-[submodule ".vim/pack/bundles/start/base16-vim"]
-	path = .vim/pack/bundles/start/base16-vim
+[submodule "vim/pack/bundles/start/base16-vim"]
+	path = vim/pack/bundles/start/base16-vim
 	url = https://github.com/chriskempson/base16-vim.git
 [submodule "base16-shell"]
 	path = base16-shell
 	url = https://github.com/chriskempson/base16-shell.git
-[submodule ".vim/pack/bundles/start/plantuml-syntax"]
-	path = .vim/pack/bundles/start/plantuml-syntax
+[submodule "vim/pack/bundles/start/plantuml-syntax"]
+	path = vim/pack/bundles/start/plantuml-syntax
 	url = https://github.com/aklt/plantuml-syntax.git
-[submodule ".vim/pack/bundles/start/vim-surround"]
-	path = .vim/pack/bundles/start/vim-surround
+[submodule "vim/pack/bundles/start/vim-surround"]
+	path = vim/pack/bundles/start/vim-surround
 	url = git://github.com/tpope/vim-surround.git
-[submodule ".vim/pack/bundles/start/vim-repeat"]
-	path = .vim/pack/bundles/start/vim-repeat
+[submodule "vim/pack/bundles/start/vim-repeat"]
+	path = vim/pack/bundles/start/vim-repeat
 	url = https://github.com/tpope/vim-repeat.git
