@@ -22,3 +22,9 @@
 [submodule "vim/pack/bundles/start/vim-repeat"]
 	path = vim/pack/bundles/start/vim-repeat
 	url = https://github.com/tpope/vim-repeat.git
+[submodule "vim/pack/bundles/start/nerdcommenter"]
+	path = vim/pack/bundles/start/nerdcommenter
+	url = https://github.com/scrooloose/nerdcommenter.git
+[submodule "vim/pack/bundles/start/vimwiki"]
+	path = vim/pack/bundles/start/vimwiki
+	url = https://github.com/vimwiki/vimwiki.git
