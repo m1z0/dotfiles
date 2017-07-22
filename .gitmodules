@@ -28,3 +28,6 @@
 [submodule "vim/pack/bundles/start/vimwiki"]
 	path = vim/pack/bundles/start/vimwiki
 	url = https://github.com/vimwiki/vimwiki.git
+[submodule "vim/pack/bundles/start/vim-ruby"]
+	path = vim/pack/bundles/start/vim-ruby
+	url = https://github.com/vim-ruby/vim-ruby.git
