@@ -31,3 +31,6 @@
 [submodule "vim/pack/bundles/start/vim-ruby"]
 	path = vim/pack/bundles/start/vim-ruby
 	url = https://github.com/vim-ruby/vim-ruby.git
+[submodule "vim/pack/bundles/start/vim-mason"]
+	path = vim/pack/bundles/start/vim-mason
+	url = https://github.com/aming/vim-mason.git

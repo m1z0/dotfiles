@@ -271,7 +271,7 @@ let g:vimwiki_hl_headers=1
 let g:vimwiki_listsyms=' .oO✓'
 let g:vimwiki_use_mouse=1
 let g:vimwiki_list = [{
-  \ 'path': '~/vimwiki/',
+  \ 'path': '~/vimwiki/wiki',
   \ 'syntax': 'markdown',
   \ 'ext': '.md',
   \ 'auto_export': 1,
@@ -307,7 +307,7 @@ endfunction
 
 "gui is faster - keep nicer line
 if has('gui')
-	set cursorcolumn               " speed up syntax highlighting
-	"set cursorline                 " speed up syntax highlighting
+	"set cursorcolumn               " speed up syntax highlighting
+	set cursorline                 " speed up syntax highlighting
 	set relativenumber				 " show relative line numbers
 endif
