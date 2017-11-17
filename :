@@ -1,0 +1,67 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	ignorecase = true
+	precomposeunicode = true
+[remote "origin"]
+	url = https://github.com/m1z0/dotfiles
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+[submodule "base16-shell"]
+	url = https://github.com/chriskempson/base16-shell.git
+	active = true
+[submodule "vim/unmanaged_plugins/vim-ruby"]
+	url = https://github.com/vim-ruby/vim-ruby.git
+	active = true
+[branch "v2"]
+	remote = origin
+	merge = refs/heads/v2
+[submodule "vim/unmanaged_plugins/vim-mason"]
+	url = https://github.com/aming/vim-mason.git
+	active = true
+[submodule "vim/unmanaged_plugins/ctrlp.vim"]
+	active = true
+	url = https://github.com/ctrlpvim/ctrlp.vim.git
+[submodule "vim/unmanaged_plugins/nerdcommenter"]
+	active = true
+	url = https://github.com/scrooloose/nerdcommenter.git
+[submodule "vim/unmanaged_plugins/plantuml-syntax"]
+	active = true
+	url = https://github.com/aklt/plantuml-syntax.git
+[submodule "vim/unmanaged_plugins/vim-markdown"]
+	active = true
+	url = https://github.com/plasticboy/vim-markdown.git
+[submodule "vim/unmanaged_plugins/vim-repeat"]
+	active = true
+	url = https://github.com/tpope/vim-repeat.git
+[submodule "vim/unmanaged_plugins/vim-surround"]
+	active = true
+	url = git://github.com/tpope/vim-surround.git
+[submodule "vim/unmanaged_plugins/vim-unimpaired"]
+	active = true
+	url = git://github.com/tpope/vim-unimpaired.git
+[submodule "vim/unmanaged_plugins/vimwiki"]
+	active = true
+	url = https://github.com/vimwiki/vimwiki.git
+[submodule "vim/unmanaged_plugins/tagbar"]
+	url = https://github.com/majutsushi/tagbar.git
+	active = true
+[submodule "vim/unmanaged_plugins/vim-gutentags"]
+	url = https://github.com/ludovicchabant/vim-gutentags.git
+	active = true
+[submodule "vim/unmanaged_plugins/vim-javascript"]
+	url = https://github.com/pangloss/vim-javascript.git
+	active = true
+[submodule "vim/unmanaged_plugins/vim-fugitive"]
+	url = https://github.com/tpope/vim-fugitive.git
+	active = true
+[submodule "vim/unmanaged_plugins/vim-jdaddy"]
+	url = https://github.com/tpope/vim-jdaddy.git
+	active = true
+[submodule "vim/unmanaged_plugins/base16-vim"]
+	active = true
+	url = https://github.com/chriskempson/base16-vim.git

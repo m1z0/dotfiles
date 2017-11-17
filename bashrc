@@ -7,3 +7,5 @@ if [ -n "$PS1" ]; then
 	source ~/.bash_profile;
 fi
 
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

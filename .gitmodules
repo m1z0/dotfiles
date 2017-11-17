@@ -1,36 +1,54 @@
-[submodule "vim/pack/bundles/start/vim-unimpaired"]
-	path = vim/pack/bundles/start/vim-unimpaired
+[submodule "vim/unmanaged_plugins/vim-unimpaired"]
+	path = vim/unmanaged_plugins/vim-unimpaired
 	url = git://github.com/tpope/vim-unimpaired.git
-[submodule "vim/pack/bundles/start/ctrlp.vim"]
-	path = vim/pack/bundles/start/ctrlp.vim
+[submodule "vim/unmanaged_plugins/ctrlp.vim"]
+	path = vim/unmanaged_plugins/ctrlp.vim
 	url = https://github.com/ctrlpvim/ctrlp.vim.git
-[submodule "vim/pack/bundles/start/vim-markdown"]
-	path = vim/pack/bundles/start/vim-markdown
+[submodule "vim/unmanaged_plugins/vim-markdown"]
+	path = vim/unmanaged_plugins/vim-markdown
 	url = https://github.com/plasticboy/vim-markdown.git
-[submodule "vim/pack/bundles/start/base16-vim"]
-	path = vim/pack/bundles/start/base16-vim
+[submodule "vim/unmanaged_plugins/base16-vim"]
+	path = vim/unmanaged_plugins/base16-vim
 	url = https://github.com/chriskempson/base16-vim.git
 [submodule "base16-shell"]
 	path = base16-shell
 	url = https://github.com/chriskempson/base16-shell.git
-[submodule "vim/pack/bundles/start/plantuml-syntax"]
-	path = vim/pack/bundles/start/plantuml-syntax
+[submodule "vim/unmanaged_plugins/plantuml-syntax"]
+	path = vim/unmanaged_plugins/plantuml-syntax
 	url = https://github.com/aklt/plantuml-syntax.git
-[submodule "vim/pack/bundles/start/vim-surround"]
-	path = vim/pack/bundles/start/vim-surround
+[submodule "vim/unmanaged_plugins/vim-surround"]
+	path = vim/unmanaged_plugins/vim-surround
 	url = git://github.com/tpope/vim-surround.git
-[submodule "vim/pack/bundles/start/vim-repeat"]
-	path = vim/pack/bundles/start/vim-repeat
+[submodule "vim/unmanaged_plugins/vim-repeat"]
+	path = vim/unmanaged_plugins/vim-repeat
 	url = https://github.com/tpope/vim-repeat.git
-[submodule "vim/pack/bundles/start/nerdcommenter"]
-	path = vim/pack/bundles/start/nerdcommenter
+[submodule "vim/unmanaged_plugins/nerdcommenter"]
+	path = vim/unmanaged_plugins/nerdcommenter
 	url = https://github.com/scrooloose/nerdcommenter.git
-[submodule "vim/pack/bundles/start/vimwiki"]
-	path = vim/pack/bundles/start/vimwiki
+[submodule "vim/unmanaged_plugins/vimwiki"]
+	path = vim/unmanaged_plugins/vimwiki
 	url = https://github.com/vimwiki/vimwiki.git
-[submodule "vim/pack/bundles/start/vim-ruby"]
-	path = vim/pack/bundles/start/vim-ruby
+[submodule "vim/unmanaged_plugins/vim-ruby"]
+	path = vim/unmanaged_plugins/vim-ruby
 	url = https://github.com/vim-ruby/vim-ruby.git
-[submodule "vim/pack/bundles/start/vim-mason"]
-	path = vim/pack/bundles/start/vim-mason
+[submodule "vim/unmanaged_plugins/vim-mason"]
+	path = vim/unmanaged_plugins/vim-mason
 	url = https://github.com/aming/vim-mason.git
+[submodule "vim/pack/bundles/start/vim-mediawiki-editor"]
+	path = vim/pack/bundles/start/vim-mediawiki-editor
+	url = https://github.com/aquach/vim-mediawiki-editor.git
+[submodule "vim/unmanaged_plugins/tagbar"]
+	path = vim/unmanaged_plugins/tagbar
+	url = https://github.com/majutsushi/tagbar.git
+[submodule "vim/unmanaged_plugins/vim-gutentags"]
+	path = vim/unmanaged_plugins/vim-gutentags
+	url = https://github.com/ludovicchabant/vim-gutentags.git
+[submodule "vim/unmanaged_plugins/vim-javascript"]
+	path = vim/unmanaged_plugins/vim-javascript
+	url = https://github.com/pangloss/vim-javascript.git
+[submodule "vim/unmanaged_plugins/vim-fugitive"]
+	path = vim/unmanaged_plugins/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive.git
+[submodule "vim/unmanaged_plugins/vim-jdaddy"]
+	path = vim/unmanaged_plugins/vim-jdaddy
+	url = https://github.com/tpope/vim-jdaddy.git
