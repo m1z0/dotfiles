@@ -5,7 +5,7 @@ endif
 if has("gui_running")
 	" gui settings!
 	colorscheme molokai
-	set linespace=1
+	"set linespace=1
 	set background=dark
 else
 	let g:molokai_original=0
@@ -29,6 +29,8 @@ endif
 
 filetype plugin indent on
 syntax enable
+
+set fillchars+=vert:\ 
 
 " automatically leave insert mode after 'updatetime' milliseconds of inaction
 au CursorHoldI * stopinsert
@@ -103,6 +105,7 @@ autocmd Filetype coffee     setlocal shiftwidth=2 tabstop=2 expandtab  " ...
 autocmd Filetype css        setlocal shiftwidth=2 tabstop=2 expandtab  " ...
 autocmd Filetype python     setlocal shiftwidth=4 tabstop=4 expandtab  " python standardized on 4 spaces
 autocmd Filetype javascript setlocal shiftwidth=4 tabstop=4 expandtab  " ...
+autocmd Filetype perl		setlocal shiftwidth=4 tabstop=4 expandtab  " ...
 
 " force filetypes for specific extensions
 autocmd BufNewFile,BufRead *.md   set filetype=markdown  " use markdown for *.md (not modula2)
@@ -137,7 +140,7 @@ set esckeys
 " Use UTF-8 without BOM
 " set encoding=utf-8 nobomb
 " Change mapleader
-let mapleader=","
+let mapleader=" "
 " Don’t add empty newlines at the end of files
 set binary
 set noeol
@@ -229,11 +232,11 @@ nnoremap <silent> <Space> @=(foldlevel('.')?'za':'l')<CR>
 vnoremap <Space> zf
 
 " emacs/bash like keys for command line editing
-cnoremap <C-a> <Home>
-cnoremap <C-e> <End>
-cnoremap <C-k> <C-U>
-cnoremap <C-p> <Up>
-cnoremap <C-n> <Down>
+" cnoremap <C-a> <Home>
+" cnoremap <C-e> <End>
+" cnoremap <C-k> <C-U>
+" cnoremap <C-p> <Up>
+" cnoremap <C-n> <Down>
 
 " easier window bindings
 map <C-j> <C-W>j
@@ -257,7 +260,7 @@ endfunction
 " All buffers into their own tab
 nnoremap <leader>bt :bufdo tab split<CR>
 " Easier buffer switching (TAB Complete works)
-nnoremap <space>b :ls<CR>:b 
+nnoremap <leader>bb :ls<CR>:b 
 
 autocmd FileType plantuml nnoremap <leader>pu :w<CR>:silent !g:plantuml_executable_script -o %:p:h %<CR>:redraw!<CR>
 
@@ -311,3 +314,9 @@ if has('gui')
 	set cursorline                 " speed up syntax highlighting
 	set relativenumber				 " show relative line numbers
 endif
+
+" tagbar
+nnoremap <leader>tt :TagbarToggle<CR>
+
+" change to directory of current file
+nnoremap <leader>sp :cd %:p:h<CR>
