@@ -2,11 +2,38 @@ if &compatible
   set nocompatible               " Be iMproved
 endif
 
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+if (empty($TMUX))
+  if (has("nvim"))
+    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+endif
+
+packadd! onedark.vim
+packadd! neodark.vim
+" packadd! vim-one
+
 if has("gui_running")
 	" gui settings!
-	colorscheme molokai
-	"set linespace=1
+	" colorscheme molokai
+	syntax on
+	set linespace=0
+	colorscheme neodark "onedark
 	set background=dark
+	let g:neodark#background = '#282c34'
+	let g:neodark#solid_vertsplit = 1 " default: 0
+	" set guifont=Anonymous\ Pro:h12
+	" set guifont=Source\ Code\ Pro\ Light:h11
+	set guifont=PT\ Mono:h11
 else
 	let g:molokai_original=0
 	let g:rehash256 = 1
@@ -72,6 +99,10 @@ end
 "http://stackoverflow.com/questions/20186975/vim-mac-how-to-copy-to-clipboard-without-pbcopy
 set clipboard^=unnamed
 set clipboard^=unnamedplus
+" Set split separator to Unicode box drawing character
+set fillchars+=vert:│
+" Override color scheme to make split lines gray
+highlight VertSplit ctermbg=NONE guibg=NONE ctermfg=Gray
 
 " searching
 set gdefault   " default /g in substs
@@ -182,6 +213,7 @@ function! StripWhitespace()
 	call setreg('/', old_query)
 endfunction
 noremap <leader>ss :call StripWhitespace()<CR>
+
 " Save a file as root (,W)
 noremap <leader>W :w !sudo tee % > /dev/null<CR>
 
@@ -320,3 +352,6 @@ nnoremap <leader>tt :TagbarToggle<CR>
 
 " change to directory of current file
 nnoremap <leader>sp :cd %:p:h<CR>
+
+"save as root (sudo)
+command! -nargs=0 Sw w !sudo tee % > /dev/null

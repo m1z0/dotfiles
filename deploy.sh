@@ -25,7 +25,7 @@ source_files=(aliases bash_profile bashrc vim vimrc)
 for f in ${source_files[@]}; do
 	fpath="${HOME}/.${f}"
 	if [[ ! -h "${fpath}" ]]; then
-		cp "${fpath}" "${backup_dir}"
+		cp -R "${fpath}" "${backup_dir}"
 	else
 		echo "${fpath} is a symlink, skipping backup ..."
 	fi
@@ -34,6 +34,6 @@ done
 #create links
 for f in ${source_files[@]}; do
 	dest_file="${HOME}/.${f}"
-	rm -f -- "${dest_file}"
+	rm -rf -- "${dest_file}"
 	ln -s "${script_dir}/${f}" "${dest_file}"
 done

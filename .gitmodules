@@ -52,3 +52,12 @@
 [submodule "vim/unmanaged_plugins/vim-jdaddy"]
 	path = vim/unmanaged_plugins/vim-jdaddy
 	url = https://github.com/tpope/vim-jdaddy.git
+[submodule "vim/pack/colors/opt/neodark.vim"]
+	path = vim/pack/colors/opt/neodark.vim
+	url = https://github.com/KeitaNakamura/neodark.vim.git
+[submodule "vim/pack/colors/opt/onedark.vim"]
+	path = vim/pack/colors/opt/onedark.vim
+	url = https://github.com/joshdick/onedark.vim.git
+[submodule "vim/pack/colors/opt/vim-one"]
+	path = vim/pack/colors/opt/vim-one
+	url = https://github.com/rakr/vim-one.git
