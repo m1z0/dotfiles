@@ -61,3 +61,7 @@
 [submodule "vim/pack/colors/opt/vim-one"]
 	path = vim/pack/colors/opt/vim-one
 	url = https://github.com/rakr/vim-one.git
+[submodule "fzf-extras"]
+	path = fzf-extras
+	url = https://github.com/atweiden/fzf-extras.git
+>>>>>>> updates for vimwiki, added more stuff to vimrc

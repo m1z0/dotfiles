@@ -282,8 +282,10 @@ map <C-l> <C-W>l
 " create a vertical split on an open buffer
 nnoremap <leader>w <C-w>v<C-w>l
 
+" deal with long lines
 nnoremap j gj
 nnoremap k gk
+set display+=lastline
 
 " TODO: move to its own file
 function! DisplayPreviewPlantuml()
@@ -356,8 +358,15 @@ nnoremap <leader>tt :TagbarToggle<CR>
 " change to directory of current file
 nnoremap <leader>sp :cd %:p:h<CR>
 
-"save as root (sudo)
-command! -nargs=0 Sw w !sudo tee % > /dev/null
-
 " diff the recovered file with its original
 command! DiffOrig vert new | set bt=nofile | r ++edit # | diffthis | wincmd p | diffthis
+
+" search for todo, action items in vimwiki
+function! SearchTodoWiki()
+	let pwd = getcwd()
+	execute 'cd' g:vimwiki_list[0].path
+	execute 'grep!' '"\[ \]"'
+	execute 'cd' pwd
+endfunction
+
+command! VWtodo call SearchTodoWiki()
