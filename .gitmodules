@@ -64,4 +64,3 @@
 [submodule "fzf-extras"]
 	path = fzf-extras
 	url = https://github.com/atweiden/fzf-extras.git
->>>>>>> updates for vimwiki, added more stuff to vimrc
