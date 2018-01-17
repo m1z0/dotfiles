@@ -19,7 +19,7 @@ get_script_dir script_dir
 backup_dir=${HOME}/.dotfiles-backup
 mkdir -p "$backup_dir"
 
-source_files=(aliases bash_profile bashrc vim vimrc)
+source_files=(aliases bash_profile bashrc vim vimrc bash private fzf-extras/fzf-extras.sh)
 
 #backup originals if exist
 for f in ${source_files[@]}; do

@@ -9,6 +9,13 @@ for file in ~/.{path,bash_prompt,exports,aliases,functions,extra}; do
 done;
 unset file;
 
+
+# Path to the bash it configuration
+export BASH="$HOME/.bash"
+
+# Load Bash It
+source "$BASH"/bash_it.sh
+
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob;
 
