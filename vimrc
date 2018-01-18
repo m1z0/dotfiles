@@ -22,6 +22,9 @@ packadd! onedark.vim
 packadd! neodark.vim
 " packadd! vim-one
 
+let g:neodark#background = '#282c34'
+let g:neodark#solid_vertsplit = 1 " default: 0
+
 if has("gui_running")
 	" gui settings!
 	" colorscheme molokai
@@ -29,8 +32,6 @@ if has("gui_running")
 	set linespace=0
 	colorscheme neodark "onedark
 	set background=dark
-	let g:neodark#background = '#282c34'
-	let g:neodark#solid_vertsplit = 1 " default: 0
 	" set guifont=Anonymous\ Pro:h12
 	" set guifont=Source\ Code\ Pro\ Light:h11
 	set guifont=PT\ Mono:h11
@@ -52,6 +53,8 @@ else
 		let g:colors_name = 'molokai'
 		let background='dark'
 	endif
+
+	colorscheme neodark
 endif
 
 filetype plugin indent on
@@ -355,3 +358,6 @@ nnoremap <leader>sp :cd %:p:h<CR>
 
 "save as root (sudo)
 command! -nargs=0 Sw w !sudo tee % > /dev/null
+
+" diff the recovered file with its original
+command! DiffOrig vert new | set bt=nofile | r ++edit # | diffthis | wincmd p | diffthis
