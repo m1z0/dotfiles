@@ -13,19 +13,28 @@ get_script_dir() {
 	eval "$1=\"$DIR\""
 }
 
+backup_file () {
+	if [ ! -d "$HOME/$backup_dir" ]; then
+		mkdir -p "$HOME/$backup_dir"
+	fi
+	timestamp=$(date +"%Y-%m-%d-%H-%M-%S")
+	echo "Backing up old .$1 at '$HOME/$backup_dir/.$1-$timestamp'"
+	cp "$HOME/.$1" "$HOME/$backup_dir/.$1-$timestamp"
+}
+
+
 # will put the script dir in the var script_dir
 get_script_dir script_dir
 
-backup_dir=${HOME}/.dotfiles-backup
-mkdir -p "$backup_dir"
+backup_dir=.dotfiles-backup
 
-source_files=(aliases bash_profile bashrc vim vimrc bash private fzf-extras/fzf-extras.sh)
+source_files=(gitconfig gitignore_global aliases bash_profile bashrc vim vimrc bash private fzf-extras/fzf-extras.sh)
 
 #backup originals if exist
 for f in ${source_files[@]}; do
 	fpath="${HOME}/.${f}"
 	if [[ ! -h "${fpath}" ]]; then
-		cp -R "${fpath}" "${backup_dir}"
+		backup_file "${fpath}"
 	else
 		echo "${fpath} is a symlink, skipping backup ..."
 	fi
