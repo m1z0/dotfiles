@@ -1,6 +1,8 @@
 
+[include]
+	path = .private/gitconfig.local
+
 [core]
-	include = .private/gitconfig.local
 	pager = less -FMRiX
 	excludesfile = .gitignore_global
 
