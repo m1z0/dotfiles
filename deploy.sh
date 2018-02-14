@@ -28,21 +28,56 @@ get_script_dir script_dir
 
 backup_dir=.dotfiles-backup
 
-source_files=(gitconfig gitignore_global aliases bash_profile bashrc vim vimrc bash private fzf-extras/fzf-extras.sh)
+source_files=(
+	gitconfig
+   	gitignore_global
+   	aliases
+   	bash_profile
+   	bashrc
+	path
+	bash_prompt
+	exports
+	aliases
+	functions
+	extra
+   	vim
+   	vimrc
+   	bash
+   	private
+   	fzf-extras/fzf-extras.sh
+)
 
-#backup originals if exist
-for f in ${source_files[@]}; do
-	fpath="${HOME}/.${f}"
-	if [[ ! -h "${fpath}" ]]; then
-		backup_file "${fpath}"
-	else
-		echo "${fpath} is a symlink, skipping backup ..."
-	fi
-done
+deploy_with_backup() {
+	#backup originals if exist
+	for f in ${source_files[@]}; do
+		fpath="${HOME}/.${f}"
+		if [[ ! -h "${fpath}" ]]; then
+			if [[ -f "${fpath}" ]]; then
+				backup_file "${fpath}"
+			else
+				echo "${fpath} does not exist ..."
+			fi
+		else
+			echo "${fpath} is a symlink, skipping backup ..."
+		fi
+	done
 
-#create links
-for f in ${source_files[@]}; do
-	dest_file="${HOME}/.${f}"
-	rm -rf -- "${dest_file}"
-	ln -s "${script_dir}/${f}" "${dest_file}"
-done
+	#create links
+	for f in ${source_files[@]}; do
+		dest_file="${HOME}/.${f}"
+		rm -rf -- "${dest_file}"
+		if [ -e "${script_dir}/$f" ]; then
+			ln -s "${script_dir}/${f}" "${dest_file}"
+		fi
+	done
+}
+
+if [ -n "$1" -a "$1" == "--dry-run" ]; then
+	for f in ${source_files[@]}; do
+		if [ ! -e $f ]; then
+			echo "$f does not exist"
+		fi
+	done
+else
+	deploy_with_backup
+fi
