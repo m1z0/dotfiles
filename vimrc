@@ -113,7 +113,7 @@ highlight VertSplit ctermbg=NONE guibg=NONE ctermfg=Gray
 
 "gui is faster - keep nicer line
 if has('gui')
-	set cursorcolumn               " speed up syntax highlighting
+	"set cursorcolumn               " speed up syntax highlighting
 	set cursorline                 " speed up syntax highlighting
 	set relativenumber				 " show relative line numbers
 endif
