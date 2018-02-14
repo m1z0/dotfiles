@@ -64,3 +64,6 @@
 [submodule "fzf-extras"]
 	path = fzf-extras
 	url = https://github.com/atweiden/fzf-extras.git
+[submodule "vim/pack/bundles/opt/QFEnter"]
+	path = vim/pack/bundles/opt/QFEnter
+	url = https://github.com/yssl/QFEnter.git

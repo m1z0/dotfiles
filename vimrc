@@ -1,25 +1,32 @@
+" machine specific settings in .private
+if filereadable(glob("~/.private/vimrc.local"))
+	source ~/.private/vimrc.local
+endif
+
 if &compatible
-  set nocompatible               " Be iMproved
+	set nocompatible               " Be iMproved
 endif
 
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
 "(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
 if (empty($TMUX))
-  if (has("nvim"))
-    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
-    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-  endif
-  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
-  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
-  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
-  if (has("termguicolors"))
-    set termguicolors
-  endif
+	if (has("nvim"))
+		"For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+		let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+	endif
+	"For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+	"Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+	" < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+	if (has("termguicolors"))
+		set termguicolors
+	endif
 endif
 
 packadd! onedark.vim
 packadd! neodark.vim
+packadd! QFEnter
+packadd! vimion
 " packadd! vim-one
 
 let g:neodark#background = '#282c34'
@@ -60,13 +67,10 @@ endif
 filetype plugin indent on
 syntax enable
 
-set fillchars+=vert:\ 
-
 " automatically leave insert mode after 'updatetime' milliseconds of inaction
 au CursorHoldI * stopinsert
 au InsertEnter * let updaterestore=&updatetime | set updatetime=60000
 au InsertLeave * let &updatetime=updaterestore
-
 
 " UI
 set backspace=eol,start,indent   " make backspace better
@@ -107,6 +111,13 @@ set fillchars+=vert:│
 " Override color scheme to make split lines gray
 highlight VertSplit ctermbg=NONE guibg=NONE ctermfg=Gray
 
+"gui is faster - keep nicer line
+if has('gui')
+	set cursorcolumn               " speed up syntax highlighting
+	set cursorline                 " speed up syntax highlighting
+	set relativenumber				 " show relative line numbers
+endif
+
 " searching
 set gdefault   " default /g in substs
 set hlsearch   " highlight matched text
@@ -128,6 +139,14 @@ set noexpandtab  " use tab characters
 set shiftwidth=4 " tab size
 set tabstop=4    " tab size
 set wrap         " wrap long lines
+
+" complete options
+"   . = current buffer
+"   w = windows
+"   b = buffers
+"   u = unloaded buffers
+"   t = tag completion
+set complete=.,b,w,u,t
 
 " file type specific indentation settings
 autocmd Filetype ruby       setlocal shiftwidth=2 tabstop=2 expandtab  " ruby standardized on 2 spaces
@@ -152,7 +171,6 @@ set fileencodings=utf-8                " use UTF-8 as encoding
 set fileformats=unix,dos,mac           " default file formats
 set bomb
 set ttyfast
-set binary  " Don’t add empty newlines at the end of files
 set path+=**                           " path for opening files
 set backupdir=~/tmp//,/tmp//,/temp//,. " location of backup files
 set directory=~/tmp//,/tmp//,/temp//,. " location of swap files
@@ -188,6 +206,9 @@ endif
 " Don’t create backups when editing files in certain directories
 set backupskip=/tmp/*,/private/tmp/*
 
+" Store .netrwhist in tmp
+let g:netrw_home="~/tmp/.vim"
+
 " Respect modeline in files
 set modeline
 set modelines=4
@@ -207,47 +228,6 @@ set noerrorbells
 " Show the current mode
 set showmode
 
-" Strip trailing whitespace (,ss)
-function! StripWhitespace()
-	let save_cursor = getpos(".")
-	let old_query = getreg('/')
-	:%s/\s\+$//e
-	call setpos('.', save_cursor)
-	call setreg('/', old_query)
-endfunction
-noremap <leader>ss :call StripWhitespace()<CR>
-
-" Save a file as root (,W)
-noremap <leader>W :w !sudo tee % > /dev/null<CR>
-
-" Automatic commands
-if has("autocmd")
-	" Enable file type detection
-	filetype on
-	" Treat .json files as .js
-	autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
-	" Treat .md files as Markdown
-	autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
-endif
-
-" The Silver Searcher
-if executable('ag')
-  " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor 
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
-endif
-
-filetype plugin on
-
-let g:ctrlp_working_path_mode   = 'rw'
-let g:ctrlp_cmd                 = 'CtrlPBuffer'
-let g:ctrlp_clear_cache_on_exit = 1
-let g:ctrlp_show_hidden         = 1
-let g:ctrlp_follow_symlinks     = 1
-
 nnoremap <leader>sv :source ~/.vimrc<CR>
 nnoremap <leader>ev :edit ~/.vimrc<CR>
 nnoremap <leader>oh :noh<CR>
@@ -255,12 +235,6 @@ nnoremap <leader>ya :%y+<CR>
 
 inoremap jk <ESC>:w<CR>
 inoremap kj <ESC>:w<CR>
-
-" vim-markdown
-let g:vim_markdown_autowrite = 1
-let g:vim_markdown_new_list_item_indent = 2
-let g:vim_markdown_conceal = 0
-let g:vim_markdown_folding_disabled = 1
 
 " setup folding (space bar toggles, including on visual selection)
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':'l')<CR>
@@ -282,10 +256,76 @@ map <C-l> <C-W>l
 " create a vertical split on an open buffer
 nnoremap <leader>w <C-w>v<C-w>l
 
+nnoremap <F5> "=strftime('%Y-%m-%d')<CR>P
+inoremap <F5> <C-R>=strftime('%Y-%m-%d')<CR>
+nnoremap <F9> :make!<CR>
+nnoremap <leader>mm :make<CR>
 " deal with long lines
 nnoremap j gj
 nnoremap k gk
 set display+=lastline
+
+" change to directory of current file
+nnoremap <leader>sp :cd %:p:h<CR>
+
+" diff the recovered file with its original
+command! DiffOrig vert new | set bt=nofile | r ++edit # | diffthis | wincmd p | diffthis
+
+" Strip trailing whitespace (,ss)
+function! StripWhitespace()
+	let save_cursor = getpos(".")
+	let old_query = getreg('/')
+	:%s/\s\+$//e
+	call setpos('.', save_cursor)
+	call setreg('/', old_query)
+endfunction
+noremap <leader>ss :call StripWhitespace()<CR>
+
+" Save a file as root (,W)
+noremap <leader>W :w !sudo tee % > /dev/null<CR>
+
+" All buffers into their own tab
+nnoremap <leader>bt :bufdo tab split<CR>
+
+" Easier buffer switching (TAB Complete works)
+nnoremap <leader>bb :ls<CR>:b 
+
+
+" Automatic commands
+if has("autocmd")
+	" Enable file type detection
+	filetype on
+	" Treat .json files as .js
+	autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
+	" Treat .md files as Markdown
+	autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
+
+	autocmd FileType plantuml nnoremap <leader>pu :w<CR>:silent !g:plantuml_executable_script -o %:p:h %<CR>:redraw!<CR>
+endif
+
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor 
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
+filetype plugin on
+
+let g:ctrlp_working_path_mode   = 'rw'
+let g:ctrlp_cmd                 = 'CtrlPBuffer'
+let g:ctrlp_clear_cache_on_exit = 1
+let g:ctrlp_show_hidden         = 1
+let g:ctrlp_follow_symlinks     = 1
+
+" vim-markdown
+let g:vim_markdown_autowrite = 1
+let g:vim_markdown_new_list_item_indent = 2
+let g:vim_markdown_conceal = 0
+let g:vim_markdown_folding_disabled = 1
 
 " TODO: move to its own file
 function! DisplayPreviewPlantuml()
@@ -293,13 +333,6 @@ function! DisplayPreviewPlantuml()
     silent "!" . g:plantuml_executable_script . " -o " . bufname("%")
 	redraw!
 endfunction
-
-" All buffers into their own tab
-nnoremap <leader>bt :bufdo tab split<CR>
-" Easier buffer switching (TAB Complete works)
-nnoremap <leader>bb :ls<CR>:b 
-
-autocmd FileType plantuml nnoremap <leader>pu :w<CR>:silent !g:plantuml_executable_script -o %:p:h %<CR>:redraw!<CR>
 
 " vimwiki
 let g:vimwiki_auto_chdir=1
@@ -329,9 +362,6 @@ function! SetMarkdownOptions()
   call VimwikiSet('custom_wiki2html', 'vimwiki2html.rb')
 endfunction
 
-nnoremap <F5> "=strftime('%Y-%m-%d')<CR>P
-inoremap <F5> <C-R>=strftime('%Y-%m-%d')<CR>
-
 function! Time(com, ...)
   let time = 0.0
   let numberOfTimes = a:0 ? a:1 : 50000
@@ -345,23 +375,11 @@ function! Time(com, ...)
   echo 'Average time: '.string(numberOfTimes / i)
 endfunction
 
-"gui is faster - keep nicer line
-if has('gui')
-	"set cursorcolumn               " speed up syntax highlighting
-	set cursorline                 " speed up syntax highlighting
-	set relativenumber				 " show relative line numbers
-endif
-
 " tagbar
 nnoremap <leader>tt :TagbarToggle<CR>
 
-" change to directory of current file
-nnoremap <leader>sp :cd %:p:h<CR>
-
-" diff the recovered file with its original
-command! DiffOrig vert new | set bt=nofile | r ++edit # | diffthis | wincmd p | diffthis
-
 " search for todo, action items in vimwiki
+command! VWtodo call SearchTodoWiki()
 function! SearchTodoWiki()
 	let pwd = getcwd()
 	execute 'cd' g:vimwiki_list[0].path
@@ -369,4 +387,43 @@ function! SearchTodoWiki()
 	execute 'cd' pwd
 endfunction
 
-command! VWtodo call SearchTodoWiki()
+" this is experimental
+" remove it or move it away from here
+command! -complete=shellcmd -nargs=+ Shell call s:RunShellCommand(<q-args>)
+function! s:RunShellCommand(cmdline)
+	let isfirst = 1
+	let words = []
+	for word in split(a:cmdline)
+		if isfirst
+			let isfirst = 0  " don't change first word (shell command)
+		else
+			if word[0] =~ '\v[%#<]'
+				let word = expand(word)
+			endif
+			let word = shellescape(word, 1)
+		endif
+		call add(words, word)
+	endfor
+	let expanded_cmdline = join(words)
+	botright new
+	setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile nowrap
+	call setline(1, 'You entered:  ' . a:cmdline)
+	call setline(2, 'Expanded to:  ' . expanded_cmdline)
+	call append(line('$'), substitute(getline(2), '.', '=', 'g'))
+	silent execute '$read !'. expanded_cmdline
+	1
+endfunction
+
+" Hack to be able to not see the netrw buffers
+" Remove set hidden
+set nohidden
+
+augroup netrw_buff_hidden_fix
+	autocmd!
+
+	"Set all non-netrw bufferst to buffhidden=hide
+	autocmd BufWinEnter *
+		\ if &ft != 'netrw'
+		\| 	set bufhidden=hide
+		\| endif
+augroup end

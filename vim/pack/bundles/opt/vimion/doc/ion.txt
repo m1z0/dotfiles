@@ -1,0 +1,48 @@
+*ion.txt* plugin for Ion files
+
+                                 _                  ~
+                                (_) ___  _ __       ~
+                                | |/ _ \| '_ \      ~
+                                | | (_) | | | |     ~
+                                |_|\___/|_| |_|     ~
+
+                             Plugin for Ion files
+      Includes syntax highlighting, indenting, and filetype recognition.
+
+==============================================================================
+CONTENTS                                                         *IonContents*
+
+    1. Usage ................................. |IonUsage|
+    2. Changelog ............................. |IonChangelog|
+    3. Credits ............................... |IonCredits|
+
+==============================================================================
+1. Usage                                                            *IonUsage*
+
+This plugin will automatically provide syntax highlighting and indenting of
+Ion files (files ending in .ion).
+
+Make sure that the following options are set in your .vimrc: >
+
+    syntax on
+    filetype plugin indent on
+
+Otherwise the filetype is not activated, and hence VimIon does not work.
+
+==============================================================================
+2. Changelog                                                    *IonChangelog*
+
+v1.0.0
+    * Import from EnvImprovement (syntax highlighting and indenting).
+
+==============================================================================
+3. Credits                                                        *IonCredits*
+
+Maintained by Eduardo Lopez Biagi (biagic@).
+
+Syntax highlighting contributed by Grant Emery (gemery@).
+
+Indenting contributed by Olivier Teuliere (teuliere@).
+
+==============================================================================
+.. vim: set ft=help norl ts=4 tw=78 et:
