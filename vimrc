@@ -32,13 +32,16 @@ packadd! vimion
 let g:neodark#background = '#282c34'
 let g:neodark#solid_vertsplit = 1 " default: 0
 
+colorscheme neodark
+set background=dark
+
 if has("gui_running")
 	" gui settings!
 	" colorscheme molokai
 	syntax on
 	set linespace=0
-	colorscheme neodark "onedark
-	set background=dark
+	"colorscheme neodark "onedark
+	"set background=dark
 	" set guifont=Anonymous\ Pro:h12
 	" set guifont=Source\ Code\ Pro\ Light:h11
 	set guifont=PT\ Mono:h11
@@ -56,12 +59,10 @@ else
 		execute 'source' . s:termaware_colorscheme_script
 	endif
 	" set a default colorscheme if nothing above succeeded
-	if !exists('g:termaware#colorschemeset')
-		let g:colors_name = 'molokai'
-		let background='dark'
-	endif
-
-	colorscheme neodark
+	"if !exists('g:termaware#colorschemeset')
+		"let g:colors_name = 'molokai'
+		"let background='dark'
+	"endif
 endif
 
 filetype plugin indent on

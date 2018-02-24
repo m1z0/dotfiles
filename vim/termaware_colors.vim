@@ -1,4 +1,8 @@
 let g:termaware#colorschemes = {
+\   'neodark' : { 
+\		'colorscheme' : 'neodark',
+\		'background' : 'dark'
+\   }, 
 \	'molokai' : {
 \		'colorscheme' : 'molokai',
 \	 	'background' : 'dark'

@@ -1,4 +1,9 @@
-#!/usr/bin/env bash
+# joins the given input using the first argument as a separator
+function join_array_lines() { 
+	local IFS="$1";
+   	shift; 
+	echo "$*"; 
+}
 
 # Create a new directory and enter it
 function mkd() {

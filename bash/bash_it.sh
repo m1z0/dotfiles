@@ -21,6 +21,16 @@ function mac_readlink()
 	echo $RESULT
 }
 
+# Source stuff!
+bash_dirs="lib completion plugins aliases"
+for dir in $bash_dirs; do
+  LIB="${BASH}/sourced/${dir}/*.bash"
+  for config_file in $LIB; do
+	  echo sourcing $config_file
+    source "$config_file"
+  done
+done
+
 # Load Privates
 pushd "${BASH}/../.private/init/bash" > /dev/null 2>&1
 PRIVATES=$(pwd -P)
