@@ -42,13 +42,13 @@ aws_saml_prompt () {
 }
 
 prompt_left () {
-  LEFT_PROMPT="\[\033[G\]\`${EXIT_STATUS}\`\[${yellow}\]\w\[\$(aws_saml_prompt)\]\[\$(nvmrc_version_prompt)\]\[\$(rvmrc_version_prompt)\]\[${custom_blue}\]\[\$(scm_char)\]\[\$(scm_prompt_info)\]\[${normal}\]\[${custom_gray}\]\[$(date "+%_I:%M:%S %P")\]"
+  LEFT_PROMPT="\[\033[G\]\`${EXIT_STATUS}\`\[${custom_orange}\]\w\[\$(aws_saml_prompt)\]\[\$(nvmrc_version_prompt)\]\[\$(rvmrc_version_prompt)\]\[${custom_blue}\]\[\$(scm_char)\]\[\$(scm_prompt_info)\]\[${normal}\]\[${custom_gray}\]\[$(date "+%_I:%M:%S %P")\]"
   echo -e "${LEFT_PROMPT}"
 }
 
 prompt () {
   [ -n "$TERM_PROGRAM" ] && __iterm_tab_title
-  PS2="\[${yellow}\]‣\[${normal}\]\[${reset_color}\] "
+  PS2="\[${custom_orange}\]‣\[${normal}\]\[${reset_color}\] "
   PS1="$(prompt_left)\n${PS2}"
 }
 
