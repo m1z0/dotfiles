@@ -31,15 +31,8 @@ backup_dir=.dotfiles-backup
 source_files=(
 	gitconfig
    	gitignore_global
-   	aliases
    	bash_profile
    	bashrc
-	path
-	bash_prompt
-	exports
-	aliases
-	functions
-	extra
    	vim
    	vimrc
    	bash

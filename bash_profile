@@ -1,5 +1,5 @@
 # Add `~/bin` to the `$PATH`
-export PATH="$HOME/bin:/usr/local/bin:${PATH}";
+export PATH="${HOME}/bin:/usr/local/bin:${HOME}/.bash/bin:${PATH}";
 
 # Make vim the default editor.
 export EDITOR='vim';
