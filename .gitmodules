@@ -67,3 +67,24 @@
 [submodule "vim/pack/bundles/opt/QFEnter"]
 	path = vim/pack/bundles/opt/QFEnter
 	url = https://github.com/yssl/QFEnter.git
+[submodule "vim/unmanaged_plugins/vim-node"]
+	path = vim/unmanaged_plugins/vim-node
+	url = https://github.com/moll/vim-node.git
+[submodule "vim/pack/bundles/opt/vim-node"]
+	path = vim/pack/bundles/opt/vim-node
+	url = https://github.com/moll/vim-node.git
+[submodule "vim/pack/bundles/opt/vim-jinja"]
+	path = vim/pack/bundles/opt/vim-jinja
+	url = https://github.com/lepture/vim-jinja.git
+[submodule "vim/pack/bundles/opt/vim-prettyprint"]
+	path = vim/pack/bundles/opt/vim-prettyprint
+	url = https://github.com/thinca/vim-prettyprint.git
+[submodule "base16-iterm2"]
+	path = base16-iterm2
+	url = https://github.com/martinlindhe/base16-iterm2.git
+[submodule "vim/pack/bundles/opt/vim-json"]
+	path = vim/pack/bundles/opt/vim-json
+	url = https://github.com/elzr/vim-json.git
+[submodule "vim/pack/bundles/opt/jedi-vim"]
+	path = vim/pack/bundles/opt/jedi-vim
+	url = https://github.com/davidhalter/jedi-vim.git

@@ -269,9 +269,6 @@ set display+=lastline
 " change to directory of current file
 nnoremap <leader>sp :cd %:p:h<CR>
 
-" diff the recovered file with its original
-command! DiffOrig vert new | set bt=nofile | r ++edit # | diffthis | wincmd p | diffthis
-
 " Strip trailing whitespace (,ss)
 function! StripWhitespace()
 	let save_cursor = getpos(".")
@@ -345,23 +342,26 @@ let g:vimwiki_hl_headers=1
 let g:vimwiki_listsyms=' .oO✓'
 let g:vimwiki_use_mouse=1
 let g:vimwiki_list = [{
-  \ 'path': '~/vimwiki/wiki',
-  \ 'syntax': 'markdown',
-  \ 'ext': '.md',
-  \ 'auto_export': 1,
-  \ 'auto_toc': 1,
-  \ 'auto_tags': 1,
-  \ 'path_html': '~/vimwiki/html',
-  \ 'custom_wiki2html': 'vimwiki2html.rb',
-  \ 'custom_wiki2html_args':'',
-  \ 'list_margin': 0 }]
+			\ 'path': '~/vimwiki/wiki',
+			\ 'template_path': '~/vimwiki/templates',
+			\ 'css_name': 'style.css',
+			\ 'template_default': 'default',
+			\ 'syntax': 'markdown',
+			\ 'ext': '.md',
+			\ 'auto_export': 1,
+			\ 'auto_toc': 1,
+			\ 'auto_tags': 1,
+			\ 'path_html': '~/vimwiki/html',
+			\ 'custom_wiki2html': 'vimwiki_markdown',
+			\ 'template_ext': '.tpl',
+			\ 'list_margin': 0 }]
 
-autocmd FileType vimwiki call SetMarkdownOptions()
+"autocmd FileType vimwiki call SetMarkdownOptions()
 
-function! SetMarkdownOptions()
-  call VimwikiSet('syntax', 'markdown')
-  call VimwikiSet('custom_wiki2html', 'vimwiki2html.rb')
-endfunction
+"function! SetMarkdownOptions()
+  "call VimwikiSet('syntax', 'markdown')
+  "call VimwikiSet('custom_wiki2html', 'vimwiki2html.rb')
+"endfunction
 
 function! Time(com, ...)
   let time = 0.0
@@ -428,3 +428,38 @@ augroup netrw_buff_hidden_fix
 		\| 	set bufhidden=hide
 		\| endif
 augroup end
+
+function! s:BuffersList()
+	let all = range(0, bufnr('$'))
+	let res = []
+	for b in all
+		if buflisted(b)
+			call add(res, bufname(b))
+		endif
+	endfor
+	echom join(res)
+	return res
+endfunction
+
+command! LB call s:BuffersList()
+
+" diff the recovered file with its original
+command! DiffOrig vert new | set bt=nofile | r ++edit # | diffthis | wincmd p | diffthis
+
+function! s:DiffWithSaved()
+	let filetype=&ft
+	diffthis
+	vnew | r # | normal! 1Gdd
+	diffthis
+	exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
+endfunction
+command! DiffSaved call s:DiffWithSaved()
+
+function! s:QF2Args()
+	let x={} 
+	for d in getqflist() 
+		let x[bufname(d.bufnr)]=1 
+	endfor
+	exe 'args' join(keys(x))
+endfunction
+command! QF2Args call s:QF2Args()
