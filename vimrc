@@ -27,7 +27,14 @@ packadd! onedark.vim
 packadd! neodark.vim
 packadd! QFEnter
 packadd! vimion
+packadd! vim-jinja
+packadd! vim-json
+"seems buggy . . .
+"packadd! vim-cursorline-current
+packadd! vim-prettyprint
 " packadd! vim-one
+
+packadd! vim-node
 
 let g:neodark#background = '#282c34'
 let g:neodark#solid_vertsplit = 1 " default: 0
@@ -39,12 +46,16 @@ if has("gui_running")
 	" gui settings!
 	" colorscheme molokai
 	syntax on
-	set linespace=0
+	set linespace=2
+	set columnspace=0
 	"colorscheme neodark "onedark
 	"set background=dark
 	" set guifont=Anonymous\ Pro:h12
 	" set guifont=Source\ Code\ Pro\ Light:h11
-	set guifont=PT\ Mono:h11
+	"set guifont=PT\ Mono:h11
+	set guifont=Inconsolata:h12
+	" don't display scroll bars
+	set guioptions=egm
 else
 	let g:molokai_original=0
 	let g:rehash256 = 1
@@ -60,8 +71,8 @@ else
 	endif
 	" set a default colorscheme if nothing above succeeded
 	"if !exists('g:termaware#colorschemeset')
-		"let g:colors_name = 'molokai'
-		"let background='dark'
+	"let g:colors_name = 'molokai'
+	"let background='dark'
 	"endif
 endif
 
@@ -96,13 +107,13 @@ set switchbuf=usetab             " when searching for a buffer to switch to, con
 set completeopt=menu,menuone     " what to show on completions
 set pumheight=10                 " completion window max size
 set nocursorcolumn               " speed up syntax highlighting
-set nocursorline                 " speed up syntax highlighting
-set norelativenumber			 " speed up syntax highlighting
+set cursorline                 
+set relativenumber			 
 if has("win32") || has("win64")  " characters to use for tab, cr, etc.
-    set listchars=tab:->,trail:.,eol:$
+	set listchars=tab:->,trail:.,eol:$
 else
-    set listchars=tab:—»,trail:·,eol:¤
-    let &sbr = nr2char(8618).' ' " Show at the beginning of wrapped lines.
+	set listchars=tab:—»,trail:·,eol:¤
+	let &sbr = nr2char(8618).' ' " Show at the beginning of wrapped lines.
 end
 "http://stackoverflow.com/questions/20186975/vim-mac-how-to-copy-to-clipboard-without-pbcopy
 set clipboard^=unnamed
@@ -113,10 +124,10 @@ set fillchars+=vert:│
 highlight VertSplit ctermbg=NONE guibg=NONE ctermfg=Gray
 
 "gui is faster - keep nicer line
-if has('gui')
-	"set cursorcolumn               " speed up syntax highlighting
-	set cursorline                 " speed up syntax highlighting
-	set relativenumber				 " show relative line numbers
+if ! has('gui')
+	set nocursorcolumn               " speed up syntax highlighting
+	"set nocursorline                 " speed up syntax highlighting
+	"set norelativenumber				 " show relative line numbers
 endif
 
 " searching
@@ -160,6 +171,7 @@ autocmd Filetype css        setlocal shiftwidth=2 tabstop=2 expandtab  " ...
 autocmd Filetype python     setlocal shiftwidth=4 tabstop=4 expandtab  " python standardized on 4 spaces
 autocmd Filetype javascript setlocal shiftwidth=4 tabstop=4 expandtab  " ...
 autocmd Filetype perl		setlocal shiftwidth=4 tabstop=4 expandtab  " ...
+autocmd Filetype yaml       setlocal shiftwidth=2 tabstop=2 expandtab  " ...
 
 " force filetypes for specific extensions
 autocmd BufNewFile,BufRead *.md   set filetype=markdown  " use markdown for *.md (not modula2)
@@ -179,11 +191,11 @@ set directory=~/tmp//,/tmp//,/temp//,. " location of swap files
 " set modifiable state of buffer to match readonly state (unless overridden
 " manually)
 function! UpdateModifiable()
-    if &readonly
-	setlocal nomodifiable
-    else
-	setlocal modifiable
-    endif
+	if &readonly
+		setlocal nomodifiable
+	else
+		setlocal modifiable
+	endif
 endfunction
 autocmd BufReadPost * call UpdateModifiable()
 
@@ -237,6 +249,10 @@ nnoremap <leader>ya :%y+<CR>
 inoremap jk <ESC>:w<CR>
 inoremap kj <ESC>:w<CR>
 
+" make c-u and c-w start a new change by default
+inoremap <c-u> <c-g>u<c-u>
+inoremap <c-w> <c-g>u<c-w>
+
 " setup folding (space bar toggles, including on visual selection)
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':'l')<CR>
 vnoremap <Space> zf
@@ -256,6 +272,9 @@ map <C-l> <C-W>l
 
 " create a vertical split on an open buffer
 nnoremap <leader>w <C-w>v<C-w>l
+
+" tab complete in insert mode
+inoremap <TAB> <C-P>
 
 nnoremap <F5> "=strftime('%Y-%m-%d')<CR>P
 inoremap <F5> <C-R>=strftime('%Y-%m-%d')<CR>
@@ -288,6 +307,8 @@ nnoremap <leader>bt :bufdo tab split<CR>
 " Easier buffer switching (TAB Complete works)
 nnoremap <leader>bb :ls<CR>:b 
 
+"tabs
+" nnormemap <DM-1> 1gt
 
 " Automatic commands
 if has("autocmd")
@@ -303,12 +324,12 @@ endif
 
 " The Silver Searcher
 if executable('ag')
-  " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor 
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
+	" Use ag over grep
+	set grepprg=ag\ --nogroup\ --nocolor 
+	" Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+	let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+	" ag is fast enough that CtrlP doesn't need to cache
+	let g:ctrlp_use_caching = 0
 endif
 
 filetype plugin on
@@ -327,8 +348,8 @@ let g:vim_markdown_folding_disabled = 1
 
 " TODO: move to its own file
 function! DisplayPreviewPlantuml()
-    silent !clear
-    silent "!" . g:plantuml_executable_script . " -o " . bufname("%")
+	silent !clear
+	silent "!" . g:plantuml_executable_script . " -o " . bufname("%")
 	redraw!
 endfunction
 
@@ -359,25 +380,25 @@ let g:vimwiki_list = [{
 "autocmd FileType vimwiki call SetMarkdownOptions()
 
 "function! SetMarkdownOptions()
-  "call VimwikiSet('syntax', 'markdown')
-  "call VimwikiSet('custom_wiki2html', 'vimwiki2html.rb')
+"call VimwikiSet('syntax', 'markdown')
+"call VimwikiSet('custom_wiki2html', 'vimwiki2html.rb')
 "endfunction
 
 function! Time(com, ...)
-  let time = 0.0
-  let numberOfTimes = a:0 ? a:1 : 50000
-  for i in range(numberOfTimes + 1)
-    let t = reltime()
-    execute a:com
-    let time += reltime(t)[1]
-"    echo i.' / '.numberOfTimes
-    "redraw
-  endfor
-  echo 'Average time: '.string(numberOfTimes / i)
+	let time = 0.0
+	let numberOfTimes = a:0 ? a:1 : 50000
+	for i in range(numberOfTimes + 1)
+		let t = reltime()
+		execute a:com
+		let time += reltime(t)[1]
+		"    echo i.' / '.numberOfTimes
+		"redraw
+	endfor
+	echo 'Average time: '.string(numberOfTimes / i)
 endfunction
 
 " tagbar
-nnoremap <leader>tt :TagbarToggle<CR>
+nnoremap <leader>tt ::TagbarOpenAutoClose<CR>
 
 " search for todo, action items in vimwiki
 command! VWtodo call SearchTodoWiki()
@@ -424,9 +445,9 @@ augroup netrw_buff_hidden_fix
 
 	"Set all non-netrw bufferst to buffhidden=hide
 	autocmd BufWinEnter *
-		\ if &ft != 'netrw'
-		\| 	set bufhidden=hide
-		\| endif
+				\ if &ft != 'netrw'
+				\| 	set bufhidden=hide
+				\| endif
 augroup end
 
 function! s:BuffersList()
@@ -463,3 +484,99 @@ function! s:QF2Args()
 	exe 'args' join(keys(x))
 endfunction
 command! QF2Args call s:QF2Args()
+
+nnoremap <leader>nj :RunNodeFile<CR>
+command! RunNodeFile call s:RunNodeFile()
+function! s:RunNodeFile() "{{{
+	let l:params = getline(1)
+	if (stridx(l:params, '//') == 0)
+		let l:param_name_end=stridx(l:params, '=', 2)
+		if (l:param_name_end != -1)
+			let l:param_name = s:Strip(strpart(l:params, 2, l:param_name_end-2))
+			"echo 'param_name = ' . l:param_name
+			let l:param = s:Strip(strpart(l:params, l:param_name_end + 1))
+			"echo 'param = ' . l:param
+
+			let l:cmd = 'node ' .  expand("%") . ' ' . l:param
+			echom 'Will execute "' . l:cmd . '"'
+			let l:result = system(l:cmd)
+
+			let l:RESULTS_BUFFER_NAME = "__NODE_RESULTS__"
+
+			let l:results_buffer = bufwinnr(l:RESULTS_BUFFER_NAME)
+			if (l:results_buffer != -1)
+				execute l:results_buffer . " wincmd w"
+			else
+				execute "vsplit " . l:RESULTS_BUFFER_NAME
+			endif
+
+			normal! ggdG
+			setlocal buftype=nofile
+
+			call append(0, split(l:result, '\v\n'))
+		endif
+	endif
+endfunction "}}}
+
+function! s:Strip(input_string)
+	return substitute(a:input_string, '^\s*\(.\{-}\)\s*$', '\1', '')
+endfunction
+
+command! Marked  execute "!open -a 'Marked.app' '-g'" . " '" . expand("%:p") . "'"
+
+function! s:get_visual_selection()
+	" Why is this not a built-in Vim script function?!
+	let [line_start, column_start] = getpos("'<")[1:2]
+	let [line_end, column_end] = getpos("'>")[1:2]
+	let lines = getline(line_start, line_end)
+	if len(lines) == 0
+		return ''
+	endif
+	let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
+	let lines[0] = lines[0][column_start - 1:]
+	return join(lines, "\n")
+endfunction
+
+function! s:UnescapeAndPrettyPrint() range
+	" let text = s:get_visual_selection()
+	"let lines = getbufline(bufnr("%"), a:firstline, a:lastline)
+	"let text = join(lines, "\n")
+	"let subbed = text
+	"let subbed = substitute(subbed, '\\"', '\"', 'g')
+	"let subbed = substitute(subbed, '{', '{\n', 'g')
+	"let subbed = substitute(subbed, '[', '[\n', 'g')
+	"let subbed = substitute(subbed, ',', ',\n', 'g')
+	"let subbed = substitute(subbed, '}', '\n}', 'g')
+
+	"let new_lines = split(subbed, '\n')
+
+	"call deletebufline("%", a:firstline, a:lastline)
+	"call append(a:firstline - 1, new_lines)
+
+	"execute "normal V" . len(new_lines) . "k"
+	execute "'<,'>s/" . '\\"' . '/"/'
+	execute "'<,'>s/" . '"{/{/'
+	execute "'<,'>s/" . '}"/}/'
+	execute "normal V"
+	execute "'<,'>!python -m json.tool"
+	execute "normal ^]"
+endfunction
+
+command! -range UnescapeAndPrettyPrint <line1>,<line2>call s:UnescapeAndPrettyPrint()
+
+function! s:BreakupIon() range
+	let l:lines = getline(a:firstline, a:lastline)
+	let l:text = join(l:lines, "\n")
+	let l:text = substitute(l:text, '{', '{\n', 'g')
+	let l:text = substitute(l:text, '[', '\n[\n', 'g')
+	let l:text = substitute(l:text, '}', '\n}\n', 'g')
+	let l:text = substitute(l:text, ']', '\n]\n', 'g')
+	let l:text = substitute(l:text, ',\(\w\)', ',\n\1', 'g')
+	let l:new_lines = split(l:text, '\n')
+	call filter(l:new_lines, {line -> line !~ '/^\s*$/'})
+	call deletebufline("%", a:firstline, a:lastline)
+	call append(a:firstline - 1, l:new_lines)
+	execute "g/^$/d"	
+endfunction
+command! -range SplitIon <line1>,<line2>call s:BreakupIon()
+
