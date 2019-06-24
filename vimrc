@@ -29,6 +29,7 @@ packadd! QFEnter
 packadd! vimion
 packadd! vim-jinja
 packadd! vim-json
+packadd! jedi-vim
 "seems buggy . . .
 "packadd! vim-cursorline-current
 packadd! vim-prettyprint
@@ -80,9 +81,9 @@ filetype plugin indent on
 syntax enable
 
 " automatically leave insert mode after 'updatetime' milliseconds of inaction
-au CursorHoldI * stopinsert
-au InsertEnter * let updaterestore=&updatetime | set updatetime=60000
-au InsertLeave * let &updatetime=updaterestore
+"au CursorHoldI * stopinsert
+"au InsertEnter * let updaterestore=&updatetime | set updatetime=60000
+"au InsertLeave * let &updatetime=updaterestore
 
 " UI
 set backspace=eol,start,indent   " make backspace better
@@ -579,4 +580,3 @@ function! s:BreakupIon() range
 	execute "g/^$/d"	
 endfunction
 command! -range SplitIon <line1>,<line2>call s:BreakupIon()
-
