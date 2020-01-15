@@ -88,3 +88,6 @@
 [submodule "vim/pack/bundles/opt/jedi-vim"]
 	path = vim/pack/bundles/opt/jedi-vim
 	url = https://github.com/davidhalter/jedi-vim.git
+[submodule "vim/unmanaged_plugins/vim-plist"]
+	path = vim/unmanaged_plugins/vim-plist
+	url = https://github.com/darfink/vim-plist.git

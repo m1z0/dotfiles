@@ -30,6 +30,7 @@ packadd! vimion
 packadd! vim-jinja
 packadd! vim-json
 packadd! jedi-vim
+packadd! vim-plist
 "seems buggy . . .
 "packadd! vim-cursorline-current
 packadd! vim-prettyprint
@@ -47,14 +48,15 @@ if has("gui_running")
 	" gui settings!
 	" colorscheme molokai
 	syntax on
-	set linespace=2
+	set linespace=0
 	set columnspace=0
 	"colorscheme neodark "onedark
 	"set background=dark
 	" set guifont=Anonymous\ Pro:h12
 	" set guifont=Source\ Code\ Pro\ Light:h11
 	"set guifont=PT\ Mono:h11
-	set guifont=Inconsolata:h12
+	"set guifont=Inconsolata:h12
+	set guifont=Iosevka\ Light:h11
 	" don't display scroll bars
 	set guioptions=egm
 else
@@ -169,7 +171,8 @@ autocmd Filetype haml       setlocal shiftwidth=2 tabstop=2 expandtab  " ...
 autocmd Filetype sass       setlocal shiftwidth=2 tabstop=2 expandtab  " ...
 autocmd Filetype coffee     setlocal shiftwidth=2 tabstop=2 expandtab  " ...
 autocmd Filetype css        setlocal shiftwidth=2 tabstop=2 expandtab  " ...
-autocmd Filetype python     setlocal shiftwidth=4 tabstop=4 expandtab  " python standardized on 4 spaces
+"moved to ftplugin
+"autocmd Filetype python     setlocal shiftwidth=4 tabstop=4 expandtab  " python standardized on 4 spaces
 autocmd Filetype javascript setlocal shiftwidth=4 tabstop=4 expandtab  " ...
 autocmd Filetype perl		setlocal shiftwidth=4 tabstop=4 expandtab  " ...
 autocmd Filetype yaml       setlocal shiftwidth=2 tabstop=2 expandtab  " ...
@@ -181,7 +184,7 @@ autocmd BufNewFile,BufRead *.scss set filetype=css       " use css for *.css
 " misc
 set encoding=utf-8                     " use UTF-8 as encoding
 set fileencoding=utf-8                 " use UTF-8 as encoding
-set fileencodings=utf-8                " use UTF-8 as encoding
+set fileencodings=ucs-bom,utf-8,cp1251,sjis  " use UTF-8 as encoding
 set fileformats=unix,dos,mac           " default file formats
 set bomb
 set ttyfast
@@ -208,8 +211,8 @@ set esckeys
 " Change mapleader
 let mapleader=" "
 " Don’t add empty newlines at the end of files
-set binary
-set noeol
+"set binary
+"set noeol
 " Centralize backups, swapfiles and undo history
 set backupdir=~/tmp/.vim/backups
 set directory=~/tmp/.vim/swaps
@@ -257,6 +260,10 @@ inoremap <c-w> <c-g>u<c-w>
 " setup folding (space bar toggles, including on visual selection)
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':'l')<CR>
 vnoremap <Space> zf
+
+" mac specific - walk buffers
+nnoremap <D-M-Right> :bnext<CR>
+nnoremap <D-M-Left>  :bprev<CR>
 
 " emacs/bash like keys for command line editing
 " cnoremap <C-a> <Home>
@@ -570,13 +577,27 @@ function! s:BreakupIon() range
 	let l:text = join(l:lines, "\n")
 	let l:text = substitute(l:text, '{', '{\n', 'g')
 	let l:text = substitute(l:text, '[', '\n[\n', 'g')
-	let l:text = substitute(l:text, '}', '\n}\n', 'g')
-	let l:text = substitute(l:text, ']', '\n]\n', 'g')
+	let l:text = substitute(l:text, '}\(,\?\)', '\n}\1\n', 'g')
+	let l:text = substitute(l:text, ']\(,\?\)', '\n]\1\n', 'g')
 	let l:text = substitute(l:text, ',\(\w\)', ',\n\1', 'g')
 	let l:new_lines = split(l:text, '\n')
 	call filter(l:new_lines, {line -> line !~ '/^\s*$/'})
 	call deletebufline("%", a:firstline, a:lastline)
 	call append(a:firstline - 1, l:new_lines)
 	execute "g/^$/d"	
+	execute "normal gg=G"
 endfunction
-command! -range SplitIon <line1>,<line2>call s:BreakupIon()
+command! -range=% SplitIon <line1>,<line2>call s:BreakupIon()
+
+
+py3 << EOL
+from amazon.ion import simpleion
+def PyPrettyPrintIon(line1, line2):
+	r = vim.current.buffer.range(int(line1),int(line2))
+	source = '\n'.join(r) + '\n'
+	ion = simpleion.loads(source, single_value=False)
+	pretty_printed = simpleion.dumps(ion, sequence_as_stream=True, binary=False, indent='    ')
+	pretty_printed = pretty_printed.split('\n')
+	r[:] = pretty_printed
+EOL
+command! -range=% PySplitIon py3 PyPrettyPrintIon(<f-line1>, <f-line2>)
