@@ -91,3 +91,6 @@
 [submodule "vim/unmanaged_plugins/vim-plist"]
 	path = vim/unmanaged_plugins/vim-plist
 	url = https://github.com/darfink/vim-plist.git
+[submodule "vim/pack/bundles/opt/vim-table-mode"]
+	path = vim/pack/bundles/opt/vim-table-mode
+	url = https://github.com/dhruvasagar/vim-table-mode.git

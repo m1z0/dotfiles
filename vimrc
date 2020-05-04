@@ -1,4 +1,4 @@
-" machine specific settings in .private
+﻿" machine specific settings in .private
 if filereadable(glob("~/.private/vimrc.local"))
 	source ~/.private/vimrc.local
 endif
@@ -35,6 +35,7 @@ packadd! vim-plist
 "packadd! vim-cursorline-current
 packadd! vim-prettyprint
 " packadd! vim-one
+packadd! vim-table-mode
 
 packadd! vim-node
 
@@ -56,8 +57,8 @@ if has("gui_running")
 	" set guifont=Source\ Code\ Pro\ Light:h11
 	"set guifont=PT\ Mono:h11
 	"set guifont=Inconsolata:h12
-	set guifont=Iosevka\ Light:h11
-	" don't display scroll bars
+	set guifont=Iosevka\ Light:h12
+" don't display scroll bars
 	set guioptions=egm
 else
 	let g:molokai_original=0
@@ -258,8 +259,8 @@ inoremap <c-u> <c-g>u<c-u>
 inoremap <c-w> <c-g>u<c-w>
 
 " setup folding (space bar toggles, including on visual selection)
-nnoremap <silent> <Space> @=(foldlevel('.')?'za':'l')<CR>
-vnoremap <Space> zf
+nnoremap <silent> <leader><Space> @=(foldlevel('.')?'za':'l')<CR>
+vnoremap <leader><Space> zf
 
 " mac specific - walk buffers
 nnoremap <D-M-Right> :bnext<CR>
@@ -354,6 +355,10 @@ let g:vim_markdown_new_list_item_indent = 2
 let g:vim_markdown_conceal = 0
 let g:vim_markdown_folding_disabled = 1
 
+" vim-table-mode
+let g:table_mode_corner = '|'
+
+
 " TODO: move to its own file
 function! DisplayPreviewPlantuml()
 	silent !clear
@@ -406,7 +411,7 @@ function! Time(com, ...)
 endfunction
 
 " tagbar
-nnoremap <leader>tt ::TagbarOpenAutoClose<CR>
+nnoremap <leader>tbt ::TagbarOpenAutoClose<CR>
 
 " search for todo, action items in vimwiki
 command! VWtodo call SearchTodoWiki()
