@@ -26,7 +26,7 @@ bash_dirs="lib completion plugins aliases"
 for dir in $bash_dirs; do
   LIB="${BASH}/sourced/${dir}/*.bash"
   for config_file in $LIB; do
-	  test "${BASHIT_VERBOSE}" == "TRUE" && ( echo sourcing $config_file )
+	  test "${BASHIT_VERBOSE}" == "TRUE" && ( echo sourcing $config_file >> ~/.bashit_log.txt )
 	  source "$config_file"
   done
 done
@@ -36,7 +36,7 @@ pushd "${BASH}/../.private/bash" > /dev/null 2>&1
 PRIVATES=$(pwd -P)
 popd > /dev/null 2>&1
 for config_file in ${PRIVATES}/*.bash; do
-	test "${BASHIT_VERBOSE}" == "TRUE" && ( echo sourcing $config_file )
+	test "${BASHIT_VERBOSE}" == "TRUE" && ( echo sourcing $config_file  >> ~/.bashit_log.txt)
 	source "$config_file"
 done
 

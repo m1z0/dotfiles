@@ -1,0 +1,16 @@
+base16-vim
+ctrlp.vim
+nerdcommenter
+plantuml-syntax
+tagbar
+vim-fugitive
+vim-javascript
+vim-jdaddy
+vim-markdown
+vim-mason
+vim-mediawiki-editor
+vim-repeat
+vim-ruby
+vim-surround
+vim-unimpaired
+vimwiki

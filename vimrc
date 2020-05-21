@@ -25,6 +25,24 @@ endif
 
 packadd! onedark.vim
 packadd! neodark.vim
+
+packadd! base16-vim
+packadd! vimwiki
+packadd! vim-jdaddy
+packadd! plantuml-syntax
+packadd! vim-surround
+packadd! tagbar
+packadd! vim-repeat
+packadd! vim-ruby
+packadd! vim-javascript
+packadd! vim-unimpaired
+packadd! vim-fugitive
+packadd! vim-markdown
+packadd! vim-mason
+packadd! vim-mediawiki-editor
+packadd! nerdcommenter
+packadd! ctrlp.vim
+
 packadd! QFEnter
 packadd! vimion
 packadd! vim-jinja
@@ -36,8 +54,56 @@ packadd! vim-plist
 packadd! vim-prettyprint
 " packadd! vim-one
 packadd! vim-table-mode
-
 packadd! vim-node
+
+"vim/pack/colors/opt/neodark.vim
+"vim/pack/colors/opt/vim-one
+"vim/pack/colors/opt/onedark.vim
+
+"vim/pack/bundles/opt/vim-cursorline-current
+"vim/pack/bundles/opt/vim-json
+"vim/pack/bundles/opt/vim-jinja
+"vim/pack/bundles/opt/vim-table-mode
+"vim/pack/bundles/opt/jedi-vim
+"vim/pack/bundles/opt/vim-node
+"vim/pack/bundles/opt/vim-plist
+"vim/pack/bundles/opt/vimion
+"vim/pack/bundles/opt/QFEnter
+
+"vim/pack/bundles/start/base16-vim
+"vim/pack/bundles/start/ctrlp.vim
+"vim/pack/bundles/start/nerdcommenter
+"vim/pack/bundles/start/plantuml-syntax
+"vim/pack/bundles/start/tagbar
+"vim/pack/bundles/start/vim-fugitive
+"vim/pack/bundles/start/vim-javascript
+"vim/pack/bundles/start/vim-jdaddy
+"vim/pack/bundles/start/vim-markdown
+"vim/pack/bundles/start/vim-mason
+"vim/pack/bundles/start/vim-mediawiki-editor
+"vim/pack/bundles/start/vim-repeat
+"vim/pack/bundles/start/vim-ruby
+"vim/pack/bundles/start/vim-surround
+"vim/pack/bundles/start/vim-unimpaired
+"vim/pack/bundles/start/vimwiki
+
+"vim/unmanaged_plugins/base16-vim
+"vim/unmanaged_plugins/ctrlp.vim
+"vim/unmanaged_plugins/nerdcommenter
+"vim/unmanaged_plugins/plantuml-syntax
+"vim/unmanaged_plugins/tagbar
+"vim/unmanaged_plugins/vim-fugitive
+"vim/unmanaged_plugins/vim-gutentags
+"vim/unmanaged_plugins/vim-javascript
+"vim/unmanaged_plugins/vim-jdaddy
+"vim/unmanaged_plugins/vim-markdown
+"vim/unmanaged_plugins/vim-mason
+"vim/unmanaged_plugins/vim-plist
+"vim/unmanaged_plugins/vim-repeat
+"vim/unmanaged_plugins/vim-ruby
+"vim/unmanaged_plugins/vim-surround
+"vim/unmanaged_plugins/vim-unimpaired
+"vim/unmanaged_plugins/vimwiki
 
 let g:neodark#background = '#282c34'
 let g:neodark#solid_vertsplit = 1 " default: 0
@@ -56,8 +122,8 @@ if has("gui_running")
 	" set guifont=Anonymous\ Pro:h12
 	" set guifont=Source\ Code\ Pro\ Light:h11
 	"set guifont=PT\ Mono:h11
-	"set guifont=Inconsolata:h12
-	set guifont=Iosevka\ Light:h12
+	set guifont=Inconsolata:h12
+	"set guifont=Iosevka\ Light:h12
 " don't display scroll bars
 	set guioptions=egm
 else
@@ -187,7 +253,8 @@ set encoding=utf-8                     " use UTF-8 as encoding
 set fileencoding=utf-8                 " use UTF-8 as encoding
 set fileencodings=ucs-bom,utf-8,cp1251,sjis  " use UTF-8 as encoding
 set fileformats=unix,dos,mac           " default file formats
-set bomb
+" breaks shebangs
+" set bomb
 set ttyfast
 set path+=**                           " path for opening files
 set backupdir=~/tmp//,/tmp//,/temp//,. " location of backup files
