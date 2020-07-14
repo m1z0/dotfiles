@@ -49,61 +49,9 @@ packadd! vim-jinja
 packadd! vim-json
 packadd! jedi-vim
 packadd! vim-plist
-"seems buggy . . .
-"packadd! vim-cursorline-current
 packadd! vim-prettyprint
-" packadd! vim-one
 packadd! vim-table-mode
 packadd! vim-node
-
-"vim/pack/colors/opt/neodark.vim
-"vim/pack/colors/opt/vim-one
-"vim/pack/colors/opt/onedark.vim
-
-"vim/pack/bundles/opt/vim-cursorline-current
-"vim/pack/bundles/opt/vim-json
-"vim/pack/bundles/opt/vim-jinja
-"vim/pack/bundles/opt/vim-table-mode
-"vim/pack/bundles/opt/jedi-vim
-"vim/pack/bundles/opt/vim-node
-"vim/pack/bundles/opt/vim-plist
-"vim/pack/bundles/opt/vimion
-"vim/pack/bundles/opt/QFEnter
-
-"vim/pack/bundles/start/base16-vim
-"vim/pack/bundles/start/ctrlp.vim
-"vim/pack/bundles/start/nerdcommenter
-"vim/pack/bundles/start/plantuml-syntax
-"vim/pack/bundles/start/tagbar
-"vim/pack/bundles/start/vim-fugitive
-"vim/pack/bundles/start/vim-javascript
-"vim/pack/bundles/start/vim-jdaddy
-"vim/pack/bundles/start/vim-markdown
-"vim/pack/bundles/start/vim-mason
-"vim/pack/bundles/start/vim-mediawiki-editor
-"vim/pack/bundles/start/vim-repeat
-"vim/pack/bundles/start/vim-ruby
-"vim/pack/bundles/start/vim-surround
-"vim/pack/bundles/start/vim-unimpaired
-"vim/pack/bundles/start/vimwiki
-
-"vim/unmanaged_plugins/base16-vim
-"vim/unmanaged_plugins/ctrlp.vim
-"vim/unmanaged_plugins/nerdcommenter
-"vim/unmanaged_plugins/plantuml-syntax
-"vim/unmanaged_plugins/tagbar
-"vim/unmanaged_plugins/vim-fugitive
-"vim/unmanaged_plugins/vim-gutentags
-"vim/unmanaged_plugins/vim-javascript
-"vim/unmanaged_plugins/vim-jdaddy
-"vim/unmanaged_plugins/vim-markdown
-"vim/unmanaged_plugins/vim-mason
-"vim/unmanaged_plugins/vim-plist
-"vim/unmanaged_plugins/vim-repeat
-"vim/unmanaged_plugins/vim-ruby
-"vim/unmanaged_plugins/vim-surround
-"vim/unmanaged_plugins/vim-unimpaired
-"vim/unmanaged_plugins/vimwiki
 
 let g:neodark#background = '#282c34'
 let g:neodark#solid_vertsplit = 1 " default: 0
@@ -115,14 +63,26 @@ if has("gui_running")
 	" gui settings!
 	" colorscheme molokai
 	syntax on
-	set linespace=0
 	set columnspace=0
 	"colorscheme neodark "onedark
 	"set background=dark
+
+	"set linespace=0
 	" set guifont=Anonymous\ Pro:h12
+
+	"set linespace=0
 	" set guifont=Source\ Code\ Pro\ Light:h11
+
+	"set linespace=0
 	"set guifont=PT\ Mono:h11
-	set guifont=Inconsolata:h12
+
+	set linespace=-1
+	set guifont=Inconsolata\ for\ Powerline:h12
+
+	"set linespace=0
+	"set guifont=Inconsolata:h12
+
+	"set linespace=0
 	"set guifont=Iosevka\ Light:h12
 " don't display scroll bars
 	set guioptions=egm
@@ -565,7 +525,8 @@ function! s:QF2Args()
 endfunction
 command! QF2Args call s:QF2Args()
 
-nnoremap <leader>nj :RunNodeFile<CR>
+"---- node ------------
+nnoremap <leader>nj :RunJS %<CR>
 command! RunNodeFile call s:RunNodeFile()
 function! s:RunNodeFile() "{{{
 	let l:params = getline(1)
@@ -601,6 +562,36 @@ endfunction "}}}
 function! s:Strip(input_string)
 	return substitute(a:input_string, '^\s*\(.\{-}\)\s*$', '\1', '')
 endfunction
+
+command! -complete=shellcmd -nargs=+ Shell call s:RunShellCommand(<q-args>)
+function! s:RunShellCommand(cmdline)
+  let isfirst = 1
+  let words = []
+  for word in split(a:cmdline)
+    if isfirst
+      let isfirst = 0  " don't change first word (shell command)
+    else
+      if word[0] =~ '\v[%#<]'
+        let word = expand(word)
+      endif
+      let word = shellescape(word, 1)
+    endif
+    call add(words, word)
+  endfor
+  let expanded_cmdline = join(words)
+  botright new
+  setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile nowrap
+  call setline(1, 'You entered:  ' . a:cmdline)
+  call setline(2, 'Expanded to:  ' . expanded_cmdline)
+  call append(line('$'), substitute(getline(2), '.', '=', 'g'))
+  silent execute '$read !'. expanded_cmdline
+  1
+endfunction
+
+command! -complete=file -nargs=* RunJS call s:RunShellCommand('node '.<q-args>)
+
+"---------------------
+
 
 command! Marked  execute "!open -a 'Marked.app' '-g'" . " '" . expand("%:p") . "'"
 
